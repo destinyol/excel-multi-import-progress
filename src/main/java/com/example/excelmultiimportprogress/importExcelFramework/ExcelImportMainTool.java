@@ -27,6 +27,8 @@ public class ExcelImportMainTool {
     /**
      * 导入工具的build方法
      * @param easyExcelReadDataImplementsClass EasyExcelReadData的实现类
+     * @param dataHandler DataDealHandler的实现类的实例对象
+     * @param redisTemplate 对应存储的redisTemplate
      * @return ExcelImportMainTool实例
      */
     public static ExcelImportMainTool buildImport(Class easyExcelReadDataImplementsClass,DataDealHandler dataHandler, RedisTemplate redisTemplate){
