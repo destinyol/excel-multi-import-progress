@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface DataDealHandler {
 
     /**
-     * 返回模板表头行数（根据对应模板配置重写该方法）
+     * 返回模板表头行数（根据对应模板配置实现该方法）
      * @return
      */
     public Integer getHeadRows();
