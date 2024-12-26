@@ -22,7 +22,7 @@ import static com.example.excelmultiimportprogress.importExcelFramework.ExcelDat
  */
 public class ExcelImportMainTool {
 
-    public static final int BATCH_COUNT = 100; // 批量处理，每批处理的数据行数，可根据情况自行修改
+    public static final int BATCH_COUNT = 100; // 批量处理，每批从excel中读取并处理的数据行数，可根据情况自行修改
 
     /**
      * 导入工具的build方法
