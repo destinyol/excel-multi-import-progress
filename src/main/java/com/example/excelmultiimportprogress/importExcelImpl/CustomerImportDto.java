@@ -1,7 +1,7 @@
 package com.example.excelmultiimportprogress.importExcelImpl;
 
 import com.alibaba.excel.annotation.ExcelProperty;
-import com.example.excelmultiimportprogress.importExcel.EasyExcelReadData;
+import com.example.excelmultiimportprogress.importExcelFramework.EasyExcelReadData;
 import lombok.Data;
 
 /**

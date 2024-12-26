@@ -2,8 +2,8 @@ package com.example.excelmultiimportprogress.controller;
 
 import com.example.excelmultiimportprogress.dao.TdCustomerMapper;
 import com.example.excelmultiimportprogress.dao.UserMapper;
-import com.example.excelmultiimportprogress.importExcel.ExcelImportMainTool;
-import com.example.excelmultiimportprogress.importExcel.ImportProgress;
+import com.example.excelmultiimportprogress.importExcelFramework.ExcelImportMainTool;
+import com.example.excelmultiimportprogress.importExcelFramework.ImportProgress;
 import com.example.excelmultiimportprogress.importExcelImpl.CustomerImportDataHandler;
 import com.example.excelmultiimportprogress.importExcelImpl.CustomerImportDto;
 import com.example.excelmultiimportprogress.model.Response;
@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.annotation.Resource;
 
 /**
  * 示例controller

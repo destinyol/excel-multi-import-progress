@@ -1,4 +1,4 @@
-package com.example.excelmultiimportprogress.importExcel;
+package com.example.excelmultiimportprogress.importExcelFramework;
 
 import com.alibaba.excel.EasyExcel;
 import lombok.Setter;
@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import static com.example.excelmultiimportprogress.importExcel.ExcelDataImportListener.generateConcurrentUUID;
+import static com.example.excelmultiimportprogress.importExcelFramework.ExcelDataImportListener.generateConcurrentUUID;
 
 /**
  *      excel带进度条多线程批量导入主方法
