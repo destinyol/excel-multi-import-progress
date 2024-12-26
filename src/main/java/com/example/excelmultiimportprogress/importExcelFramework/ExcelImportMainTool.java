@@ -46,7 +46,7 @@ public class ExcelImportMainTool {
 
     /**
      * 主要的run方法
-     * @return 返回该进度存入redis中的key，可返回给前端
+     * @return 返回该进度的key，可返回给前端
      */
     public String runAsync(MultipartFile file) throws IOException {
         return this.runAsync(file.getInputStream());
@@ -67,7 +67,7 @@ public class ExcelImportMainTool {
 
     /**
      * 主要的run方法
-     * @return 返回该进度存入redis中的key，可返回给前端
+     * @return 返回该进度的key，可返回给前端
      */
     public String runAsync(InputStream inputStream){
         ExecutorService executor = Executors.newSingleThreadExecutor();
