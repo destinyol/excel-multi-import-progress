@@ -3,16 +3,6 @@ package com.example.excelmultiimportprogress.importExcelFramework;
 public interface EasyExcelReadData {
 
     /**
-     * 设置该条数据在表格中行数index
-     * @param rowIndex
-     */
-    public void setRowIndex(Integer rowIndex);
-    /**
-     * 返回该条数据在表格中行数index
-     */
-    public Integer getRowIndex();
-
-    /**
      * 去掉每个字段首尾空格（若不需要则方法体为空即可）
      *      （处理过程中每行会调用一次）
      */

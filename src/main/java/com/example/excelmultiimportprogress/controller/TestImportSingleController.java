@@ -16,11 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * 示例controller
+ * 单个导入示例controller
+ *      实现handle的handleOneDataAndSave方法
  */
 @RestController
-@RequestMapping("/test")
-public class TestImportController {
+@RequestMapping("/testSingle")
+public class TestImportSingleController {
 
     @Autowired
     private TdCustomerMapper tdCustomerMapper;
@@ -41,7 +42,7 @@ public class TestImportController {
         response.ret(0,"成功了");
         try {
             CustomerImportDataHandler handler = new CustomerImportDataHandler(userMapper,tdCustomerMapper);
-            String processKey = ExcelImportMainTool.buildImport(CustomerImportDto.class, handler, redisTemplate).runAsync(file);
+            String processKey = ExcelImportMainTool.buildImport(CustomerImportDto.class, handler, redisTemplate).runAsyncSingle(file);
             response.setData(processKey);
         } catch (Exception e) {
             e.printStackTrace();
