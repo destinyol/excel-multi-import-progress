@@ -24,6 +24,7 @@ public class ExcelImportMainTool {
 
     public static final int BATCH_COUNT = 1000; // 批量处理，每批从excel中读取并处理的数据行数，可根据情况自行修改
     public int BATCH_INSERT_COUNT = 200; // 使用批量插入时的每批次处理数量（传入handleMultiDataAndSave函数的数组大小），可根据情况自行修改，可动态设置
+    public static final boolean PROCESS_SAVE_RESULT_LIST = true; // redis保存进度条时是否保存报错结果数组ExcelResDto，true保存，false不保存
 
     /**
      * 导入工具的build方法

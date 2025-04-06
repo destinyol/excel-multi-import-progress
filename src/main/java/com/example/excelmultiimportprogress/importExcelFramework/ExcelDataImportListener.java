@@ -28,6 +28,7 @@ public class ExcelDataImportListener<T> extends AnalysisEventListener<T> {
     }
 
     private static final int BATCH_COUNT = ExcelImportMainTool.BATCH_COUNT; // 每批处理的数据量
+    private static final boolean PROCESS_SAVE_RESULT_LIST = ExcelImportMainTool.PROCESS_SAVE_RESULT_LIST;
     private int BATCH_INSERT_COUNT; // 每批处理的数据量
     private final List<EasyExcelReadData> cachedDataList = new ArrayList<>(BATCH_COUNT);
 
@@ -64,7 +65,7 @@ public class ExcelDataImportListener<T> extends AnalysisEventListener<T> {
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
         saveData();
-        ImportProgress progressObj = new ImportProgress(processKey, ((double)currentCount.get()/(double)totalCount.get()), 2, new ArrayList<>(resDtoListRes));
+        ImportProgress progressObj = new ImportProgress(processKey, ((double)currentCount.get()/(double)totalCount.get()), 2, PROCESS_SAVE_RESULT_LIST?new ArrayList<>(resDtoListRes):new ArrayList<>());
         redisTemplate.opsForValue().set(processKey, progressObj);
     }
 
@@ -83,14 +84,14 @@ public class ExcelDataImportListener<T> extends AnalysisEventListener<T> {
                 try {
                     ExcelResDto resDto = future.get();
                     currentCount.incrementAndGet();
-                    if (resDto != null){
+                    if (PROCESS_SAVE_RESULT_LIST && resDto != null){
                         resDtoListRes.add(resDto);
                     }
-                    ImportProgress progressObj = new ImportProgress(processKey, ((double)currentCount.get()/(double)totalCount.get()), 1, new ArrayList<>(resDtoListRes));
+                    ImportProgress progressObj = new ImportProgress(processKey, ((double)currentCount.get()/(double)totalCount.get()), 1, PROCESS_SAVE_RESULT_LIST?new ArrayList<>(resDtoListRes):new ArrayList<>());
                     redisTemplate.opsForValue().set(processKey, progressObj);
                 } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();
-                    ImportProgress progressObj = new ImportProgress(processKey, ((double)currentCount.get()/(double)totalCount.get()), 3, new ArrayList<>(resDtoListRes));
+                    ImportProgress progressObj = new ImportProgress(processKey, ((double)currentCount.get()/(double)totalCount.get()), 3, PROCESS_SAVE_RESULT_LIST?new ArrayList<>(resDtoListRes):new ArrayList<>());
                     progressObj.setWrongCode("111000"); // 错误码，可自定义
                     redisTemplate.opsForValue().set(processKey, progressObj);
                 }
@@ -123,14 +124,14 @@ public class ExcelDataImportListener<T> extends AnalysisEventListener<T> {
                     CountAndResList res = future.get();
                     List<ExcelResDto> resDto = res.getResList();
                     currentCount.addAndGet(res.getHandleCount());
-                    if (resDto != null){
+                    if (PROCESS_SAVE_RESULT_LIST && resDto != null){
                         resDtoListRes.addAll(resDto);
                     }
-                    ImportProgress progressObj = new ImportProgress(processKey, ((double)currentCount.get()/(double)totalCount.get()), 1, new ArrayList<>(resDtoListRes));
+                    ImportProgress progressObj = new ImportProgress(processKey, ((double)currentCount.get()/(double)totalCount.get()), 1, PROCESS_SAVE_RESULT_LIST?new ArrayList<>(resDtoListRes):new ArrayList<>());
                     redisTemplate.opsForValue().set(processKey, progressObj);
                 } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();
-                    ImportProgress progressObj = new ImportProgress(processKey, ((double)currentCount.get()/(double)totalCount.get()), 3, new ArrayList<>(resDtoListRes));
+                    ImportProgress progressObj = new ImportProgress(processKey, ((double)currentCount.get()/(double)totalCount.get()), 3, PROCESS_SAVE_RESULT_LIST?new ArrayList<>(resDtoListRes):new ArrayList<>());
                     progressObj.setWrongCode("111000"); // 错误码，可自定义
                     redisTemplate.opsForValue().set(processKey, progressObj);
                 }
