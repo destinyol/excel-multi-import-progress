@@ -2,14 +2,15 @@ package com.example.excelmultiimportprogress.importExcelImpl;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.example.excelmultiimportprogress.importExcelFramework.EasyExcelReadData;
+import com.example.excelmultiimportprogress.importExcelFramework.EasyExcelReadDataAbstract;
 import lombok.Data;
 
 /**
  * 示例：easyExcel导入的数据实体类
- *      （ EasyExcelReadData的实现类 ）
+ *      （ EasyExcelReadDataAbstract的子类 ）
  */
 @Data
-public class CustomerImportDto implements EasyExcelReadData {
+public class CustomerImportDto extends EasyExcelReadDataAbstract {
 
     @ExcelProperty(value = "销售")
     private String saleUserName;
@@ -34,8 +35,6 @@ public class CustomerImportDto implements EasyExcelReadData {
 
     @ExcelProperty(value = "客户地址")
     private String address;
-
-    private Integer rowIndex;
 
     /**
      * 检查类中的每个属性是否为null或空字符串，如果是，则返回true；否则返回false
@@ -65,15 +64,5 @@ public class CustomerImportDto implements EasyExcelReadData {
         if (legalPerson != null) legalPerson = legalPerson.trim();
         if (registerMoney != null) registerMoney = registerMoney.trim();
         if (address != null) address = address.trim();
-    }
-
-    @Override
-    public Integer getRowIndex() {
-        return rowIndex;
-    }
-
-    @Override
-    public void setRowIndex(Integer rowIndex) {
-        this.rowIndex = rowIndex;
     }
 }
