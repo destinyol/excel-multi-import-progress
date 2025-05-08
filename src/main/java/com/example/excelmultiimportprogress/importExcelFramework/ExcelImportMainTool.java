@@ -6,6 +6,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import static com.example.excelmultiimportprogress.importExcelFramework.ExcelDataImportListener.generateConcurrentUUID;
@@ -107,13 +110,35 @@ public class ExcelImportMainTool {
         String key = generateConcurrentUUID(ExcelDataImportListener.IMPORT_EXCEL_REDIS_KEY);
         String keyStr = ExcelDataImportListener.IMPORT_EXCEL_REDIS_KEY + key;
         this.excelDataImportListener.setProcessKey(keyStr);
-        executor.submit(() -> {
-            try {
-                this.run(inputStream,importSingleOrMulti);
-            }catch (Exception e){
-                e.printStackTrace();
+
+        try {
+            Path tempFile = Files.createTempFile("upload_", ".tmp");
+            try (OutputStream outputStream = Files.newOutputStream(tempFile)) {
+                byte[] buffer = new byte[8192];  // 8KB缓冲区
+                int bytesRead;
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
             }
-        });
+
+            executor.submit(() -> {
+                try {
+                    this.run(Files.newInputStream(tempFile),importSingleOrMulti);
+                }catch (Exception e){
+                    e.printStackTrace();
+                } finally {
+                    // 确保删除临时文件
+                    try {
+                        Files.deleteIfExists(tempFile);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         return key;
     }
 
